@@ -1,0 +1,17 @@
+{
+  "name": "SkillSwap - Exchange Skills, Build Connections",
+  "short_name": "SkillSwap",
+  "description": "Teach what you know, learn what you don't, and grow together in a trusted community.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f7fc",
+  "theme_color": "#6d28d9",
+  "icons": [
+    {
+      "src": "/pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
