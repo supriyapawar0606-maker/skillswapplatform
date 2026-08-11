@@ -17,10 +17,48 @@ const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
-app.use(cors());
+/* =========================
+   CORS CONFIGURATION
+========================= */
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://skillswapplatform-nine.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests without an origin
+      // (Postman, server-to-server requests, etc.)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+/* =========================
+   MIDDLEWARE
+========================= */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+/* =========================
+   ROUTES
+========================= */
 
 app.use("/api/auth", authRoutes);
 app.use("/api/skills", skillRoutes);
@@ -34,6 +72,10 @@ app.use("/api/schedule", scheduleRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/admin", adminRoutes);
+
+/* =========================
+   ROOT ROUTE
+========================= */
 
 app.get("/", (req, res) => {
   res.json({
